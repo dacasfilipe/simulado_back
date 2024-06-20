@@ -7,8 +7,8 @@ const bcrypt = require('bcrypt');
 router.post('/', async (req, res) => {
     try {
         const senhaEncriptada = await bcrypt.hash(req.body.senha, 10);
-        const query = `INSERT INTO funcionarios (nome, cpf, celular, data_nascimento, email, senha) VALUES (?, ?, ?, ?, ?, ?)`;
-        const replacements = [req.body.nome, req.body.cpf, req.body.celular, req.body.data_nascimento, req.body.email, senhaEncriptada];
+        const query = `INSERT INTO funcionarios (nome, cpf, celular, data_nascimento, email, senha,concessionarias_id) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        const replacements = [req.body.nome, req.body.cpf, req.body.celular, req.body.data_nascimento, req.body.email, senhaEncriptada,req.body.concessionarias_id];
         console.log(replacements)
         const [results, metadata] = await sequelize.query(query, { replacements });
 

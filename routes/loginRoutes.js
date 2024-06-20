@@ -27,18 +27,20 @@ router.post('/login', async (req, res) => {
           return res.status(401).send('Usuário não encontrado.');
       }
 
-      const user = results[0];
-      console.log("deu certo",user);
+      const funcionario = results[0];
+      console.log("deu certo",funcionario);
 
       try {
         console.log("senha",senha)
-        console.log("user.senha",user.senha)
-          const match = await bcrypt.compare(senha, user.senha);
+        console.log("user.senha",funcionario.senha)
+          const match = await bcrypt.compare(senha, funcionario.senha);
           console.log("match",match)
           if (match) {
-              const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+              const id = funcionario.id;
+              const nome = funcionario.nome;
+              const token = jwt.sign({ id:id, nome:nome }, process.env.SECRET_KEY, { expiresIn: '1h' });
               console.log("token",token)
-              return res.json({ token });
+              return res.json({ token, funcionario:{id: id, nome: nome} });
           } else {
               return res.status(401).send('Senha incorreta.');
           }

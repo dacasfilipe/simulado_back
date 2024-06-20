@@ -32,10 +32,17 @@ const Funcionario = sequelize.define('funcionarios', {
     senha: {
         type: DataTypes.STRING,
         allowNull: false,
-    },    
+    }, 
+    concessionarias_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+
+    }   
  
 });
 
 Funcionario.sync();
+Automovel.belongsTo(concessionarias, { foreignKey: 'concessionarias_id' });
+
 
 module.exports = Funcionario;
