@@ -38,9 +38,10 @@ router.post('/login', async (req, res) => {
           if (match) {
               const id = funcionario.id;
               const nome = funcionario.nome;
-              const token = jwt.sign({ id:id, nome:nome }, process.env.SECRET_KEY, { expiresIn: '1h' });
+              const concessionarias_id = funcionario.concessionarias_id;
+              const token = jwt.sign({ id:id, nome:nome, concessionarias_id :concessionarias_id }, process.env.SECRET_KEY, { expiresIn: '1h' });
               console.log("token",token)
-              return res.json({ token, funcionario:{id: id, nome: nome} });
+              return res.json({ token, funcionario:{id: id, nome: nome, concessionarias_id: concessionarias_id} });
           } else {
               return res.status(401).send('Senha incorreta.');
           }
