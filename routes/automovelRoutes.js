@@ -43,6 +43,29 @@ router.get('/', async (req, res) => {
     }
 });
 
+// GET para listar todas os automoveis para por concessionaria
+router.get('/concessionaria/:id', async (req, res) => {
+    try {
+        
+        const concessionarias_id = req.params.concessionarias_id;
+        console.log(concessionarias_id);
+        const query = "SELECT * FROM automoveis WHERE concessionarias_id = :id";
+        const results = await sequelize.query(query, {
+            replacements: { id: concessionarias_id }, 
+            type: QueryTypes.SELECT });
+        console.log(results);
+        res.json({
+            success: true,
+            automoveis: results,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
 router.get("/filtro/:palavra", async (req, res) => {
     const palavra = req.params.palavra;
     try {
