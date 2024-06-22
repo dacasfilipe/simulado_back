@@ -25,11 +25,13 @@ router.post('/', async (req, res) => {
     }
 });
 
-// GET para listar todas as tarefas
-router.get('/', async (req, res) => {
+// GET para listar todas as concessionarias
+router.get('/:id', async (req, res) => {
     try {
-        const query = "SELECT * FROM automoveis";
-        const results = await sequelize.query(query, { type: QueryTypes.SELECT });
+        const query = "SELECT * FROM automoveis WHERE concessionarias_id = :id";
+        const results = await sequelize.query(query, { 
+            replacements: { id: req.params.id },
+            type: QueryTypes.SELECT });
         console.log(results);
         res.json({
             success: true,
